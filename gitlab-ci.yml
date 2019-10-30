@@ -1,0 +1,19 @@
+cache:
+  key: "$CI_COMMIT_REF_NAME"
+  paths:
+    - build
+    - .gradle
+
+image: gradle:5.1.1-jdk8-slim
+
+stages:
+  - build
+  - test
+
+build:
+  script:
+    - gradle assemble --build-cache --no-daemon --gradle-user-home=`pwd`/.gradle
+
+test:
+  script:
+    - gradle check --build-cache --no-daemon --gradle-user-home=`pwd`/.gradle
